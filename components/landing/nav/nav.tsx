@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { Icons } from "@/components/docs/icons";
+import { Suspense } from "react";
 
 import { cn } from "@/lib/utils";
 // import { Icons } from "@/components/icons"

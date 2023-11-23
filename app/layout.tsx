@@ -20,7 +20,6 @@ export default async function RootLayout({
     <html lang="en">
       <body className={cx(sfPro.variable, inter.variable, calSans.variable)}>
         {children}
-
         <Analytics />
       </body>
     </html>

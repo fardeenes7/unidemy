@@ -7,6 +7,7 @@ import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
 import { Session } from "next-auth";
 import Nav from "./nav/nav";
+import { Suspense } from "react";
 
 export default function NavBar({ session }: { session: Session | null }) {
   const { SignInModal, setShowSignInModal } = useSignInModal();
@@ -36,18 +37,20 @@ export default function NavBar({ session }: { session: Session | null }) {
             </Link>
             <Nav />
           </div>
-          <div>
-            {session ? (
-              <UserDropdown session={session} />
-            ) : (
-              <button
-                className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
-                onClick={() => setShowSignInModal(true)}
-              >
-                Sign In
-              </button>
-            )}
-          </div>
+          <Suspense fallback="Loading...">
+            <div>
+              {session ? (
+                <UserDropdown session={session} />
+              ) : (
+                <button
+                  className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
+                  onClick={() => setShowSignInModal(true)}
+                >
+                  Sign In
+                </button>
+              )}
+            </div>
+          </Suspense>
         </div>
       </div>
     </>

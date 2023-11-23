@@ -1,4 +1,4 @@
-import Error from "./(landing)/not-found";
+import NotFoundPage from "../components/landing/notFoundPage";
 import Nav from "@/components/landing/nav";
 import Footer from "@/components/landing/footer";
 
@@ -9,7 +9,7 @@ export default function NotFound() {
 
       <div className="fixed h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-cyan-100" />
       <main className="flex w-full flex-col items-center justify-center py-32">
-        <Error />
+        <NotFoundPage />
       </main>
       <Footer />
     </>
