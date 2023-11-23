@@ -186,4 +186,4 @@ async function og(div) {
   });
 }
 
-export { handler as ImageResponse, handler as default, handler as GET };
+export { handler as ImageResponse, handler as GET };
