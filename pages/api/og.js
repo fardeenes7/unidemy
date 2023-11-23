@@ -1,12 +1,14 @@
 import { ImageResponse } from "@vercel/og";
 
-export const runtime = "edge";
+export const config = {
+  runtime: "edge",
+};
 
 const font = fetch(
-  new URL("../../fonts/CalSans-SemiBold.ttf", import.meta.url),
+  new URL("../../app/fonts/CalSans-SemiBold.ttf", import.meta.url),
 ).then((res) => res.arrayBuffer());
 
-async function handler(req) {
+export default async function handler(req) {
   const fontData = await font;
   const { searchParams } = req.nextUrl;
 
@@ -183,5 +185,3 @@ async function og(div) {
     ],
   });
 }
-
-export { handler };
