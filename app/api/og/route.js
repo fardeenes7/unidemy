@@ -1,6 +1,8 @@
 import { ImageResponse } from "@vercel/og";
 
 export const runtime = "edge";
+export const alt = "Open Graph";
+export const contentType = "image/png";
 
 const font = fetch(
   new URL("../../fonts/CalSans-SemiBold.ttf", import.meta.url),
@@ -184,4 +186,4 @@ async function og(div) {
   });
 }
 
-export { handler as ImageResponse };
+export { handler as ImageResponse, handler as default, handler as GET };
