@@ -1,16 +1,27 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["jsonProtocol"]
-}
+// generator client {
+//   provider = "prisma-client-js"
+//   previewFeatures = ["jsonProtocol"]
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+//   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+// }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider     = "mysql"
+  url          = env("MYSQL_PRISMA_URL")
+  relationMode = "prisma"
 }
+
+generator client {
+  provider = "prisma-client-js"
+}
+
 
 
 model Account {
@@ -33,6 +44,16 @@ model Account {
   @@index([userId])
 }
 
+model Subscription{
+  id String @id @default(cuid())
+  userId String
+  type String
+  validUntil DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
@@ -50,6 +71,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  subscriptions Subscription[]
 }
 
 model VerificationToken {
