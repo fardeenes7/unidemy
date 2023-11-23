@@ -39,12 +39,14 @@ export const authOptions: NextAuthOptions = {
         token.role = user.role;
         return token;
       }
+      return token;
     },
     async session({ session, token }) {
       if (session?.user) {
         session.user.role = token.role;
         return session;
       }
+      return session;
     },
   },
 };
