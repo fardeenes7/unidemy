@@ -115,13 +115,6 @@ export default function NotFound() {
   return (
     <div className="bg-white">
       <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="pt- flex-shrink-0">
-          <img
-            className="mx-auto h-4 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
-            alt="Workflow"
-          />
-        </div>
         <div className="mx-auto max-w-xl py-16 sm:py-24">
           <div className="text-center">
             <h1
