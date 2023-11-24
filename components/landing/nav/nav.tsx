@@ -4,8 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { Icons } from "@/components/docs/icons";
-import { Suspense } from "react";
-
+import Logo from "public/logo.svg";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 // import { Icons } from "@/components/icons"
 import {
@@ -22,20 +22,17 @@ const components: { title: string; href: string; description: string }[] = [
   {
     title: "All Courses",
     href: "/courses",
-    description:
-      "View all of our courses",
+    description: "View all of our courses",
   },
   {
     title: "Django Full Stack",
     href: "/courses/django",
-    description:
-      "Learn how to build a full stack application with Django",
+    description: "Learn how to build a full stack application with Django",
   },
   {
     title: "Introduction to Python",
     href: "/courses/python",
-    description:
-      "Learn the fundamentals of Python",
+    description: "Learn the fundamentals of Python",
   },
 ];
 
@@ -55,7 +52,8 @@ export default function NavigationMenuDemo() {
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                     href="/"
                   >
-                    <Icons.logo className="h-6 w-6" />
+                    {/* <Icons.logo className="h-6 w-6" /> */}
+                    <Image src={Logo.src} alt="Logo" height="24" width="24" />
                     <div className="mb-2 mt-4 text-lg font-medium">Unidemy</div>
                     <p className="text-sm leading-tight text-muted-foreground">
                       Carefully crafted keeping students in mind.

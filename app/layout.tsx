@@ -5,10 +5,9 @@ import { sfPro, inter, calSans } from "./fonts";
 import { Suspense } from "react";
 
 export const metadata = {
-  title: "Precedent - Building blocks for your Next.js project",
-  description:
-    "Precedent is the all-in-one solution for your Next.js project. It includes a design system, authentication, analytics, and more.",
-  metadataBase: new URL("https://precedent.dev"),
+  title: "Unidemy",
+  description: "All in one platform for learning, teaching, and collaborating.",
+  metadataBase: new URL("https://unidemy.app/"),
 };
 
 export default async function RootLayout({

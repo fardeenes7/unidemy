@@ -4,7 +4,6 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
-  Command,
   CreditCard,
   File,
   FileText,
@@ -24,12 +23,11 @@ import {
   User,
   X,
   type Icon as LucideIcon,
-} from "lucide-react"
+} from "lucide-react";
 
-export type Icon = LucideIcon
+export type Icon = LucideIcon;
 
 export const Icons = {
-  logo: Command,
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,
@@ -69,4 +67,4 @@ export const Icons = {
   ),
   twitter: Twitter,
   check: Check,
-}
+};
