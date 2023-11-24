@@ -115,7 +115,7 @@ export default function NotFound() {
   return (
     <div className="bg-white">
       <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-xl py-16 sm:py-24">
+        <div className="mx-auto max-w-5xl">
           <div className="text-center">
             <h1
               className="animate-fade-up bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent opacity-0 drop-shadow-sm [text-wrap:balance] md:text-7xl md:leading-[5rem]"
@@ -131,7 +131,7 @@ export default function NotFound() {
             </p>
             <p className="mt-2 text-lg text-gray-500">Maybe</p>
           </div>
-          <div className="mt-12">
+          <div className="mt-2">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">
               Popular pages
             </h2>
@@ -143,7 +143,7 @@ export default function NotFound() {
                 <Link
                   key={linkIdx}
                   href={link.href}
-                  className="group relative flex animate-fade-up items-start space-x-4 py-6 opacity-0 hover:border"
+                  className="group relative flex animate-fade-up items-start space-x-4 px-4 py-6 sm:px-6"
                   style={{
                     animationDelay: link.delay,
                     animationFillMode: "forwards",
@@ -152,7 +152,7 @@ export default function NotFound() {
                   <div className="flex-shrink-0">
                     <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-50">
                       <link.icon
-                        className="h-6 w-6 text-indigo-700"
+                        className="h-6 w-6 text-indigo-700 group-hover:text-indigo-300"
                         aria-hidden="true"
                       />
                     </span>
@@ -160,7 +160,7 @@ export default function NotFound() {
                   <div className="min-w-0 flex-1">
                     <h3 className="text-base font-medium text-gray-900">
                       <span className="rounded-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2">
-                        <p className="focus:outline-none group-hover:text-gray-400">
+                        <p className="focus:outline-none ">
                           <span
                             className="absolute inset-0"
                             aria-hidden="true"
@@ -169,7 +169,7 @@ export default function NotFound() {
                         </p>
                       </span>
                     </h3>
-                    <p className="text-base text-gray-500">
+                    <p className="text-base text-gray-500 ">
                       {link.description}
                     </p>
                   </div>
