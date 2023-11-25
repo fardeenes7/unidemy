@@ -24,7 +24,7 @@ export default async function Courses({ limit }: { limit?: number }) {
   return courses.length > 0 ? (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {courses.map((course) => (
-        <CourseCard key={course.id} data={course} />
+        <CourseCard key={course.id} data={course} landing={false} />
       ))}
     </div>
   ) : (
