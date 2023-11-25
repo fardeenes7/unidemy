@@ -6,11 +6,11 @@ import DeleteCourseForm from "@/components/manage/form/delete-course-form";
 export default async function CourseSettingsIndex({
   params,
 }: {
-  params: { id: string };
+  params: { slug: string };
 }) {
   const data = await prisma.course.findUnique({
     where: {
-      id: decodeURIComponent(params.id),
+      slug: decodeURIComponent(params.slug),
     },
   });
 

@@ -31,7 +31,7 @@ export default function Form({
   };
   handleSubmit: any;
 }) {
-  const { id } = useParams() as { id?: string };
+  const { slug } = useParams() as { slug?: string };
   const router = useRouter();
   const { update } = useSession();
   return (
@@ -45,12 +45,12 @@ export default function Form({
         ) {
           return;
         }
-        handleSubmit(data, id, inputAttrs.name).then(async (res: any) => {
+        handleSubmit(data, slug, inputAttrs.name).then(async (res: any) => {
           if (res.error) {
             toast.error(res.error);
           } else {
-            va.track(`Updated ${inputAttrs.name}`, id ? { id } : {});
-            if (id) {
+            va.track(`Updated ${inputAttrs.name}`, slug ? { slug } : {});
+            if (slug) {
               router.refresh();
             } else {
               await update();
@@ -73,7 +73,7 @@ export default function Form({
             name={inputAttrs.name}
           />
         ) : inputAttrs.name === "font" ? (
-          <div className="flex max-w-sm items-center overflow-hidden rounded-lg border border-stone-600">
+          <div className="overflow-hslugden flex max-w-sm items-center rounded-lg border border-stone-600">
             <select
               name="font"
               defaultValue={inputAttrs.defaultValue}
