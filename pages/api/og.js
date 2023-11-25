@@ -20,11 +20,11 @@ export default async function handler(req) {
       ? searchParams.get("title")
       : "Unidemy";
     return og(page(title));
-  } else if (type == "project") {
+  } else if (type == "course") {
     const title = searchParams.get("title")
       ? searchParams.get("title")
       : "Unidemy";
-    return og(project(title));
+    return og(course(title));
   } else if (type == "test") {
     const title = searchParams.get("title")
       ? searchParams.get("title")
@@ -89,7 +89,7 @@ function page(title) {
   );
 }
 
-function project(title) {
+function course(title) {
   return (
     <div
       style={{
@@ -111,8 +111,8 @@ function project(title) {
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end",
-          alignItems: "flex-end",
+          justifyContent: "center",
+          alignItems: "center",
           width: "75%",
         }}
       >
@@ -129,6 +129,7 @@ function project(title) {
     </div>
   );
 }
+
 function test(title) {
   return (
     <div

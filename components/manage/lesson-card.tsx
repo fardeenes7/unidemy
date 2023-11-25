@@ -20,7 +20,10 @@ export default function LessonCard({
             width={500}
             height={400}
             className="h-full object-cover"
-            src={data.image ?? "/api/og"}
+            src={
+              data.image ??
+              `/api/og?type=course&title=${data.title ?? "Untitled Lesson"}`
+            }
             placeholder="blur"
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
           />
