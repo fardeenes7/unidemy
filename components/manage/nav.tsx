@@ -16,6 +16,7 @@ import {
   Github,
   LibraryBig,
   Users,
+  Library,
 } from "lucide-react";
 import {
   useParams,
@@ -72,11 +73,18 @@ export default function Nav({ children }: { children: ReactNode }) {
           icon: <ArrowLeft width={18} />,
         },
         {
-          name: "Lessons",
+          name: "Overview",
           href: `/manage/courses/${slug}`,
           isActive: segments.length === 2,
           icon: <Newspaper width={18} />,
         },
+        {
+          name: "Lessons",
+          href: `/manage/courses/${slug}/lessons`,
+          isActive: segments.includes("lessons"),
+          icon: <Library width={18} />,
+        },
+
         {
           name: "Analytics",
           href: `/manage/courses/${slug}/analytics`,
@@ -170,12 +178,12 @@ export default function Nav({ children }: { children: ReactNode }) {
         <div className="grid gap-2">
           <div className="flex items-center space-x-2 rounded-lg px-2 py-1.5">
             <a
-              href="https://vercel.com/templates/next.js/platforms-starter-kit"
+              href="https://fardiin.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-lg p-1.5 hover:bg-stone-200 dark:hover:bg-stone-700"
             >
-              <svg
+              {/* <svg
                 width="26"
                 viewBox="0 0 76 65"
                 fill="none"
@@ -186,7 +194,13 @@ export default function Nav({ children }: { children: ReactNode }) {
                   d="M37.5274 0L75.0548 65H0L37.5274 0Z"
                   fill="currentColor"
                 />
-              </svg>
+              </svg> */}
+              <Image
+                src="https://fardiin.com/logo.svg"
+                alt="fardiin.com"
+                width={24}
+                height={24}
+              />
             </a>
             <div className="h-6 rotate-[30deg] border-l border-stone-400 dark:border-stone-500" />
             <Link

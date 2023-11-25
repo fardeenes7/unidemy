@@ -25,8 +25,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import Logo from "/logo.svg";
-
 export type Icon = LucideIcon;
 
 export const Icons = {
@@ -69,5 +67,4 @@ export const Icons = {
   ),
   twitter: Twitter,
   check: Check,
-  logo: Logo.src,
 };
