@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { Post } from "@prisma/client";
-import { updatePost, updatePostMetadata } from "@/lib/actions";
+import { Lesson } from "@prisma/client";
+import { updateLesson, updateLessonMetadata } from "@/lib/manage/actions";
 import { Editor as NovelEditor } from "novel";
 import TextareaAutosize from "react-textarea-autosize";
 import { cn } from "@/lib/utils";
@@ -10,12 +10,12 @@ import LoadingDots from "./icons/loading-dots";
 import { ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 
-type PostWithSite = Post & { site: { subdomain: string | null } | null };
+type LessonWithSite = Lesson & { site: { subdomain: string | null } | null };
 
-export default function Editor({ post }: { post: PostWithSite }) {
+export default function Editor({ lesson }: { lesson: LessonWithSite }) {
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
-  const [data, setData] = useState<PostWithSite>(post);
+  const [data, setData] = useState<LessonWithSite>(lesson);
   const [hydrated, setHydrated] = useState(false);
 
   const url = process.env.NEXT_PUBLIC_VERCEL_ENV
@@ -28,7 +28,7 @@ export default function Editor({ post }: { post: PostWithSite }) {
       if (e.metaKey && e.key === "s") {
         e.preventDefault();
         startTransitionSaving(async () => {
-          await updatePost(data);
+          await updateLesson(data);
         });
       }
     };
@@ -60,12 +60,12 @@ export default function Editor({ post }: { post: PostWithSite }) {
             console.log(data.published, typeof data.published);
             formData.append("published", String(!data.published));
             startTransitionPublishing(async () => {
-              await updatePostMetadata(formData, post.id, "published").then(
+              await updateLessonMetadata(formData, lesson.id, "published").then(
                 () => {
                   toast.success(
                     `Successfully ${
                       data.published ? "unpublished" : "published"
-                    } your post.`,
+                    } your lesson.`,
                   );
                   setData((prev) => ({ ...prev, published: !prev.published }));
                 },
@@ -91,21 +91,21 @@ export default function Editor({ post }: { post: PostWithSite }) {
         <input
           type="text"
           placeholder="Title"
-          defaultValue={post?.title || ""}
+          defaultValue={lesson?.title || ""}
           autoFocus
           onChange={(e) => setData({ ...data, title: e.target.value })}
           className="dark:placeholder-text-600 border-none px-0 font-display text-3xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
         />
         <TextareaAutosize
           placeholder="Description"
-          defaultValue={post?.description || ""}
+          defaultValue={lesson?.description || ""}
           onChange={(e) => setData({ ...data, description: e.target.value })}
           className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
         />
       </div>
       <NovelEditor
         className="relative block"
-        defaultValue={post?.content || undefined}
+        defaultValue={lesson?.content || undefined}
         onUpdate={(editor) => {
           setData((prev) => ({
             ...prev,
@@ -114,14 +114,14 @@ export default function Editor({ post }: { post: PostWithSite }) {
         }}
         onDebouncedUpdate={() => {
           if (
-            data.title === post.title &&
-            data.description === post.description &&
-            data.content === post.content
+            data.title === lesson.title &&
+            data.description === lesson.description &&
+            data.content === lesson.content
           ) {
             return;
           }
           startTransitionSaving(async () => {
-            await updatePost(data);
+            await updateLesson(data);
           });
         }}
       />
