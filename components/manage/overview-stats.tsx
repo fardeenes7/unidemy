@@ -1,6 +1,6 @@
 "use client";
 
-import { random } from "@/lib/utils";
+import { random } from "@/lib/manage/utils";
 import { Card, Metric, Text, AreaChart, BadgeDelta, Flex } from "@tremor/react";
 import { useMemo } from "react";
 
