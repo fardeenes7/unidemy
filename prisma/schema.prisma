@@ -73,6 +73,9 @@ model User {
   accounts      Account[]
   sessions      Session[]
   subscriptions Subscription[]
+  lessons       Lesson[]
+  courses       Course[]
+  posts         Post[]
 }
 
 model VerificationToken {
@@ -81,4 +84,62 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Lesson {
+  id            String   @id @default(cuid())
+  title         String?  @db.Text
+  description   String?  @db.Text
+  content       String?  @db.Text
+  slug          String   @default(cuid())
+  image         String?  @db.Text
+  imageBlurhash String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  published     Boolean  @default(false)
+  course        Course?    @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  courseId      String?
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId        String?
+
+  @@unique([slug, courseId])
+  @@index([courseId])
+  @@index([userId])
+}
+
+model Course {
+  id            String   @id @default(cuid())
+  name          String?
+  description   String?  @db.Text
+  font          String   @default("font-display")
+  image         String?  @db.Text
+  imageBlurhash String?  @db.Text
+  slug          String?  @unique
+  message404    String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  status        String   @default("Draft")
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId        String?
+  lessons       Lesson[]
+
+  @@index([userId])
+}
+
+model Post{
+  id            String   @id @default(cuid())
+  title         String?  @db.Text
+  description   String?  @db.Text
+  content       String?  @db.Text
+  slug          String   @default(cuid())
+  image         String?  @db.Text
+  imageBlurhash String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  published     Boolean  @default(false)
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId        String?
+
+  @@unique([slug, userId])
+  @@index([userId])
 }

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import useScroll from "@/lib/hooks/use-scroll";
-import { useSignInModal } from "./sign-in-modal";
+import { useSignInModal } from "../auth/LoginModal";
 import UserDropdown from "./user-dropdown";
 import { Session } from "next-auth";
 import Nav from "./nav/nav";

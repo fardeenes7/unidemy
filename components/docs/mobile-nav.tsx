@@ -5,7 +5,7 @@ import { MainNavItem } from "types";
 import { siteConfig } from "config/site";
 import { cn } from "@/lib/utils";
 import { useLockBody } from "@/lib/hooks/use-lock-body";
-import { Icons } from "components/docs/icons";
+import Image from "next/image";
 
 interface MobileNavProps {
   items: MainNavItem[];
@@ -23,7 +23,7 @@ export function MobileNav({ items, children }: MobileNavProps) {
     >
       <div className="relative z-20 grid gap-6 rounded-md bg-popover p-4 text-popover-foreground shadow-md">
         <Link href="/" className="flex items-center space-x-2">
-          <Icons.logo />
+          <Image src="/logo.svg" alt="Logo" className="h-8 w-8" />
           <span className="font-bold">{siteConfig.name}</span>
         </Link>
         <nav className="grid grid-flow-row auto-rows-max text-sm">
