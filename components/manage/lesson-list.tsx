@@ -4,7 +4,7 @@ import { Lesson, Course } from "@prisma/client";
 import { BarChart, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
-export default function LessonCard({
+export default function LessonList({
   data,
 }: {
   data: Lesson & { course: Course | null };
@@ -12,13 +12,13 @@ export default function LessonCard({
   const url = `${process.env.NEXT_PUBLIC_APP_URL}/manage/courses/${data.course?.slug}/${data.id}`;
 
   return (
-    <div className="relative rounded-lg border border-stone-200 pb-10 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
-      <Link href={url} className="flex flex-col overflow-hidden rounded-lg">
-        <div className="relative h-44 overflow-hidden">
+    <div className="relative flex rounded-lg border border-stone-200 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
+      <Link href={url} className="flex overflow-hidden rounded-lg">
+        <div className="relative h-24 overflow-hidden">
           <BlurImage
             alt={data.title ?? "Card thumbnail"}
-            width={500}
-            height={400}
+            width={400}
+            height={200}
             className="h-full object-cover"
             src={
               data.image ??
@@ -28,7 +28,7 @@ export default function LessonCard({
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
           />
           {!data.published && (
-            <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
+            <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-xs font-medium text-stone-600 shadow-md">
               Draft
             </span>
           )}
@@ -42,7 +42,7 @@ export default function LessonCard({
           </p>
         </div>
       </Link>
-      <div className="absolute bottom-4 flex w-full px-4">
+      <div className=" flex w-full flex-col items-end justify-center px-4">
         <a
           href={
             process.env.NEXT_PUBLIC_VERCEL_ENV

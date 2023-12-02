@@ -42,6 +42,18 @@ export default async function CourseSettingsIndex({
         }}
         handleSubmit={updateCourse}
       />
+      <Form
+        title="Playlist Id"
+        description="The ID of the corresponding YouTube playlist."
+        helpText="Use a valid YouTube playlist ID."
+        inputAttrs={{
+          name: "playlistId",
+          type: "text",
+          defaultValue: data?.playlistId!,
+          placeholder: "PL1lNrW4e0JXZLzQv4JL1ZlqZz3jJXKz5x",
+        }}
+        handleSubmit={updateCourse}
+      />
 
       <DeleteCourseForm courseName={data?.name!} />
     </div>

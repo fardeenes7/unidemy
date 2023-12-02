@@ -21,6 +21,13 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "**google**.com",
+        port: "",
+        pathname: "/**",
+      },
+
+      {
+        protocol: "https",
         hostname: "vercel.com",
         port: "",
         pathname: "/**",

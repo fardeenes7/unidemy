@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/react";
 import cx from "classnames";
 import { sfPro, inter, calSans } from "./fonts";
 import { Suspense } from "react";
+import TopLoadingBar from "@/components/ui/toploadingbar";
 
 export const metadata = {
   title: "Unidemy",
@@ -18,7 +19,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={cx(sfPro.variable, inter.variable, calSans.variable)}>
-        {children}
+        <TopLoadingBar>{children}</TopLoadingBar>
         <Analytics />
       </body>
     </html>

@@ -19,7 +19,7 @@ export default function CreateLessonButton() {
           const lesson = await createLesson(null, slug, null);
           va.track("Created Lesson");
           router.refresh();
-          router.push(`${slug}/${lesson.id}`);
+          router.push(`/manage/courses/${slug}/${lesson.id}`);
         })
       }
       className={cn(

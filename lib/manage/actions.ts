@@ -14,6 +14,25 @@ const nanoid = customAlphabet(
   7,
 ); // 7-character random string
 
+const createPlaylist = async (name: string, description: string) => {
+  const url = `${process.env.YOUTUBE_API_URL}/playlists?part=snippet`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.YOUTUBE_DATA_API}`,
+    },
+    body: JSON.stringify({
+      snippet: {
+        title: name,
+        description: description,
+      },
+    }),
+  });
+  const data = await response.json();
+  return data.id;
+};
+
 export const createCourse = async (formData: FormData) => {
   const session = await getSession();
   if (!session?.user.id) {
@@ -24,6 +43,13 @@ export const createCourse = async (formData: FormData) => {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const slug = formData.get("slug") as string;
+  // const playlistId = formData.get("playlistId") as string;
+  const playlistId = await createPlaylist(name, description);
+  if (!playlistId) {
+    return {
+      error: "Error creating playlist",
+    };
+  }
 
   try {
     const response = await prisma.course.create({
@@ -31,6 +57,7 @@ export const createCourse = async (formData: FormData) => {
         name,
         description,
         slug,
+        playlistId: playlistId,
         user: {
           connect: {
             id: session.user.id,
