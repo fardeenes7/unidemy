@@ -1,0 +1,142 @@
+import { Callout } from "nextra/components";
+
+# Using the API
+
+## Authentication🔨
+
+<Callout type="warning" emoji="🔨">
+  Authentication is currently in progress.
+</Callout>
+
+## Try out
+
+<a
+  href="https://god.gw.postman.com/run-collection/15913220-e379bf30-70cd-4ed9-9d15-7807e1a2d9e8?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D15913220-e379bf30-70cd-4ed9-9d15-7807e1a2d9e8%26entityType%3Dcollection%26workspaceId%3D88b79eea-00a6-417a-b637-f9a043f21be0"
+  target="_blank"
+>
+  <img style={{ marginTop: "16px" }} src="https://run.pstmn.io/button.svg" />
+</a>
+
+## Base URL
+
+```
+https://unidemy.tech/api
+```
+
+## Endpoints
+
+### GET /nid
+
+Fetches information for all users in the National ID Database.
+
+- Example: `GET /nid`
+- Response Format:
+
+  ```json
+  [
+    {
+      "id": "123",
+      "first_name": "John",
+      "last_name": "Doe",
+      "dob": "1990-05-20",
+      ...
+    },
+    {
+      "id": "124",
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "dob": "1988-12-15",
+      ...
+    },
+    ...
+  ]
+  ```
+
+### POST /nid
+
+Adds a new user to the National ID Database.
+
+Example: POST /nid
+Request Format:
+
+```json
+{
+"first_name": "New",
+"last_name": "User",
+"dob": "1995-08-10",
+...
+}
+```
+
+Response Format:
+
+```json
+{
+"id": "125",
+"first_name": "New",
+"last_name": "User",
+"dob": "1995-08-10",
+...
+}
+```
+
+### GET /nid/:id
+
+Retrieves specific user information from the National ID Database based on the provided ID.
+
+Example: GET /nid/123
+Parameters: id (user's unique identifier)
+Response Format:
+
+```json
+Copy code
+{
+"id": "123",
+"first_name": "John",
+"last_name": "Doe",
+"dob": "1990-05-20",
+...
+}
+```
+
+### PUT /nid/:id
+
+Updates user information in the National ID Database based on the provided ID.
+
+Example: PUT /nid/123
+Parameters: id (user's unique identifier)
+Request Format:
+
+```json
+{
+"first_name": "Updated",
+"last_name": "User",
+"dob": "1990-05-20",
+...
+}
+```
+
+Response Format:
+
+```json
+{
+"id": "123",
+"first_name": "Updated",
+"last_name": "User",
+"dob": "1990-05-20",
+...
+}
+```
+
+### DELETE /nid/:id
+
+Removes a user's information from the National ID Database based on the provided ID.
+
+Example: DELETE /nid/123
+Parameters: id (user's unique identifier)
+
+Response Format:
+
+```
+
+```

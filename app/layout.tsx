@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import cx from "classnames";
-import { sfPro, inter, calSans } from "./fonts";
+import { sfPro, inter, calSans } from "../public/fonts/index";
 import { Suspense } from "react";
 import TopLoadingBar from "@/components/ui/toploadingbar";
 

@@ -5,7 +5,7 @@ export const config = {
 };
 
 const font = fetch(
-  new URL("../../app/fonts/CalSans-SemiBold.ttf", import.meta.url),
+  new URL("../../public/fonts/CalSans-SemiBold.ttf", import.meta.url),
 ).then((res) => res.arrayBuffer());
 
 export default async function handler(req) {

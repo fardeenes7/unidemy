@@ -1,6 +1,13 @@
 // next.config.js
 const { withContentlayer } = require("next-contentlayer");
 
+//nextra docs
+const withNextra = require("nextra")({
+  theme: "nextra-theme-docs",
+  themeConfig: "./theme.config.js",
+  basePath: "/docs",
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -51,4 +58,5 @@ const nextConfig = {
   },
 };
 
-module.exports = withContentlayer(nextConfig);
+// module.exports = withContentlayer(nextConfig);
+module.exports = withNextra(withContentlayer(nextConfig));
