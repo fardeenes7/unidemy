@@ -34,7 +34,7 @@ export default async function Home() {
         >
           {/* <Twitter className="h-5 w-5 text-[#1d9bf0]" /> */}
           <p className="text-sm font-semibold text-gray-700">
-            Introducing Unidemy v1
+            Unidemy is Live Now
           </p>
         </a>
         <h1
@@ -44,11 +44,10 @@ export default async function Home() {
           Companion for your university project
         </h1>
         <p
-          className="mt-6 animate-fade-up text-center text-gray-500 opacity-0 [text-wrap:balance] md:text-xl"
+          className="mt-6 animate-fade-up text-center font-display text-gray-500 opacity-0 [text-wrap:balance] md:text-xl"
           style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
         >
-          An opinionated collection of components, hooks, and utilities for your
-          Next.js project.
+          For students, by students.
         </p>
         <div
           className="mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0"
@@ -97,11 +96,7 @@ export default async function Home() {
             title={title}
             description={description}
             demo={
-              title === "Beautiful, reusable components" ? (
-                <ComponentGrid />
-              ) : (
-                demo
-              )
+              title === "Carefully crafted courses" ? <ComponentGrid /> : demo
             }
             large={large}
           />
@@ -113,9 +108,9 @@ export default async function Home() {
 
 const features = [
   {
-    title: "Beautiful, reusable components",
+    title: "Carefully crafted courses",
     description:
-      "Pre-built beautiful, a11y-first components, powered by [Tailwind CSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), and [Framer Motion](https://framer.com/motion)",
+      "Unidemy has both live and recorded courses to meet your needs.",
     large: true,
   },
   {

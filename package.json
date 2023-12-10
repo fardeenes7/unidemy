@@ -7,8 +7,8 @@
     "url": "https://fardiin.com/"
   },
   "scripts": {
-    "dev": "prisma generate && concurrently \"contentlayer dev\" \"next dev\"",
-    "build": "contentlayer build && prisma generate && prisma db push && next build",
+    "dev": "concurrently \"contentlayer dev\" \"next dev\"",
+    "build": "contentlayer build && next build",
     "format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "start": "next start",
