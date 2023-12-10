@@ -119,7 +119,7 @@ export default function AnalyticsMockup() {
                 icon: () => {
                   if (title === "Top Referrers") {
                     return (
-                      <img
+                      <Image
                         src={`https://www.google.com/s2/favicons?sz=64&domain_url=${name}`}
                         alt={name}
                         className="mr-2.5"

@@ -2,37 +2,9 @@ import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import LessonCard from "./lesson-card";
+import LessonList from "./lesson-list";
 import Image from "next/image";
-import { DataTable } from "./data-table";
 
-//
-import { ColumnDef } from "@tanstack/react-table";
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Column = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-};
-
-export const columns: ColumnDef<Column>[] = [
-  {
-    accessorKey: "title",
-    header: "Title",
-  },
-  {
-    accessorKey: "course",
-    header: "Course",
-  },
-  {
-    accessorKey: "amount",
-    header: "Amount",
-  },
-];
-
-//
 export default async function Lessons({
   courseId,
   limit,
@@ -59,9 +31,9 @@ export default async function Lessons({
 
   return lessons.length > 0 ? (
     // <DataTable columns={columns} data={lessons} />
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="flex flex-col gap-3">
       {lessons.map((lesson) => (
-        <LessonCard key={lesson.id} data={lesson} />
+        <LessonList key={lesson.id} data={lesson} />
       ))}
     </div>
   ) : (
