@@ -35,6 +35,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".contentlayer/generated"
-, "app/api/og/route.js", "app/api/auth/[...nextauth]/options.ts", "app/(landing)/courses/[slug]"  ],
+, "app/api/og/route.js", "app/api/auth/[...nextauth]/options.ts", "app/(landing)/courses/[slug]", "app/manage/not-found.js"  ],
   "exclude": ["node_modules"]
 }

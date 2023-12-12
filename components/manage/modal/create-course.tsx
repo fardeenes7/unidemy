@@ -9,15 +9,18 @@ import LoadingDots from "@/components/manage/icons/loading-dots";
 import { useModal } from "./provider";
 import va from "@vercel/analytics";
 import { useEffect, useState } from "react";
+import { getPlaylistList } from "@/lib/manage/actions";
 
 export default function CreateCourseModal() {
   const router = useRouter();
   const modal = useModal();
+  const playlistList = getPlaylistList();
 
   const [data, setData] = useState({
     name: "",
     slug: "",
     description: "",
+    playlistId: "",
   });
 
   useEffect(() => {

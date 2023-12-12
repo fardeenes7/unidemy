@@ -1,33 +1,20 @@
 import { Suspense } from "react";
+import Courses from "@/components/manage/courses";
 import PlaceholderCard from "@/components/manage/placeholder-card";
-// import Users from "@/components/manage/users";
+import CreateCourseButton from "@/components/manage/create-course-button";
+import CreateCourseModal from "@/components/manage/modal/create-course";
 
-import { Payment, columns } from "./columns";
-import Users from "./data-table";
-
-async function getData(): Promise<Payment[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    // ...
-  ];
-}
-
-const Page = async ({}) => {
-  const data = await getData();
-
+export default function NidPage() {
   return (
     <div className="flex max-w-screen-xl flex-col space-y-12">
       <div className="flex flex-col space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="font-display text-3xl font-bold dark:text-white">
-            All Users
+            UniPay
           </h1>
+          <CreateCourseButton>
+            <CreateCourseModal />
+          </CreateCourseButton>
         </div>
         <Suspense
           fallback={
@@ -38,11 +25,10 @@ const Page = async ({}) => {
             </div>
           }
         >
-          <Users />
+          {/* @ts-expect-error Server Component */}
+          <Courses courseId={decodeURIComponent(params.id)} />
         </Suspense>
       </div>
     </div>
   );
-};
-
-export default Page;
+}

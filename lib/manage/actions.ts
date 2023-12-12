@@ -33,6 +33,13 @@ const createPlaylist = async (name: string, description: string) => {
   return data.id;
 };
 
+export const getPlaylistList = async () => {
+  const url = `${process.env.YOUTUBE_API_URL}/playlists?part=snippet%2CcontentDetails&channelId=${process.env.YOUTUBE_CHANNEL_ID}&maxResults=25&key=${process.env.YOUTUBE_DATA_API}`;
+  const response = await fetch(url, {});
+  const data = await response.json();
+  console.log("data: ", data?.items);
+};
+
 export const createCourse = async (formData: FormData) => {
   const session = await getSession();
   if (!session?.user.id) {

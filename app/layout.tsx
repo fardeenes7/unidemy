@@ -8,7 +8,7 @@ import TopLoadingBar from "@/components/ui/toploadingbar";
 export const metadata = {
   title: "Unidemy",
   description: "All in one platform for learning, teaching, and collaborating.",
-  metadataBase: new URL("https://unidemy.app/"),
+  metadataBase: new URL("https://unidemy.tech/"),
 };
 
 export default async function RootLayout({

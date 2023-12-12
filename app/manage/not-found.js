@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function NotFoundSite() {
+export default function NotFound() {
   return (
     <div className="mt-20 flex flex-col items-center space-x-4">
       <h1 className="font-display text-4xl dark:text-white">404</h1>
@@ -19,7 +19,7 @@ export default function NotFoundSite() {
         className="hidden dark:block"
       />
       <p className="text-lg text-stone-500 dark:text-stone-400">
-        Course does not exist, or you do not have permission to view it
+        This page does not exist, or you do not have permission to view it
       </p>
     </div>
   );

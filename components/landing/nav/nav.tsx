@@ -59,7 +59,7 @@ export default function NavigationMenuDemo() {
                   </a>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/features/api" title="API">
+              <ListItem href="/features/nid" title="National ID API">
                 Free and Paid APIs for Rapid Development
               </ListItem>
               <ListItem
@@ -105,7 +105,7 @@ export default function NavigationMenuDemo() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
+          <Link href="/guides" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Guides
             </NavigationMenuLink>
