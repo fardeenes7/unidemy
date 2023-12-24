@@ -16,12 +16,12 @@ const nanoid = customAlphabet(
 
 const getAccessToken = async () => {
   const session = await getSession();
-  if (!session?.user.id) {
+  if (!session?.user.id || !session?.user.accessToken) {
     return {
       error: "Not authenticated",
     };
   }
-  return session.accessToken;
+  return session.user.accessToken;
 };
 
 const createPlaylist = async (name: string, description: string) => {
