@@ -14,23 +14,57 @@ const nanoid = customAlphabet(
   7,
 ); // 7-character random string
 
+const getAccessToken = async () => {
+  const session = await getSession();
+  if (!session?.user.id || !session?.accessToken) {
+    return {
+      error: "Not authenticated",
+    };
+  }
+  return session.accessToken;
+};
+
 const createPlaylist = async (name: string, description: string) => {
-  const url = `${process.env.YOUTUBE_API_URL}/playlists?part=snippet`;
+  const url = `${process.env.YOUTUBE_API_URL}/playlists?part=snippet%2Cstatus&key=${process.env.YOUTUBE_DATA_API}`;
+  const accessToken = await getAccessToken();
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.YOUTUBE_DATA_API}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify({
       snippet: {
         title: name,
         description: description,
       },
+      status: {
+        privacyStatus: "private",
+      },
     }),
   });
   const data = await response.json();
   return data.id;
+};
+
+const deletePlaylist = async (playlistId: string, accessToken: string) => {
+  const url = `${process.env.YOUTUBE_API_URL}/playlists?id=${playlistId}&key=${process.env.YOUTUBE_DATA_API}`;
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const getPlaylistList = async () => {
+  const url = `${process.env.YOUTUBE_API_URL}/playlists?part=snippet%2CcontentDetails&channelId=${process.env.YOUTUBE_CHANNEL_ID}&maxResults=25&key=${process.env.YOUTUBE_DATA_API}`;
+  const response = await fetch(url, {});
+  const data = await response.json();
+  console.log("data: ", data);
 };
 
 export const createCourse = async (formData: FormData) => {

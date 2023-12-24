@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 
 export const sfPro = localFont({
   src: "./SF-Pro-Display-Medium.otf",
@@ -14,5 +14,11 @@ export const calSans = localFont({
 
 export const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+export const mono = JetBrains_Mono({
+  variable: "--font-mono",
+  display: "swap",
   subsets: ["latin"],
 });

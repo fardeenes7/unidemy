@@ -17,6 +17,8 @@ import {
   LibraryBig,
   Users,
   Library,
+  CreditCard,
+  Fingerprint,
 } from "lucide-react";
 import {
   useParams,
@@ -132,6 +134,19 @@ export default function Nav({ children }: { children: ReactNode }) {
         isActive: segments[0] === "courses",
         icon: <LibraryBig width={18} />,
       },
+      {
+        name: "NID Api",
+        href: "/manage/nid",
+        isActive: segments[0] === "nid",
+        icon: <Fingerprint width={18} />,
+      },
+      {
+        name: "UniPay",
+        href: "/manage/unipay",
+        isActive: segments[0] === "unipay",
+        icon: <CreditCard width={18} />,
+      },
+
       {
         name: "Users",
         href: "/manage/users",

@@ -10,11 +10,7 @@ export default async function Courses({ limit }: { limit?: number }) {
     redirect("/login");
   }
   const courses = await prisma.course.findMany({
-    where: {
-      user: {
-        id: session.user.id as string,
-      },
-    },
+    where: {},
     orderBy: {
       createdAt: "asc",
     },

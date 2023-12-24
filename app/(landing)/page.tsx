@@ -2,6 +2,7 @@ import Card from "@/components/home/card";
 import { DEPLOY_URL } from "@/lib/constants";
 import { Github, Twitter } from "@/components/shared/icons";
 import WebVitals from "@/components/home/web-vitals";
+import Link from "next/link";
 import ComponentGrid from "@/components/home/component-grid";
 import Image from "next/image";
 import { nFormatter } from "@/lib/utils";
@@ -34,48 +35,33 @@ export default async function Home() {
         >
           {/* <Twitter className="h-5 w-5 text-[#1d9bf0]" /> */}
           <p className="text-sm font-semibold text-gray-700">
-            Introducing Unidemy v1
+            Unidemy is in beta
           </p>
         </a>
         <h1
           className="animate-fade-up bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent opacity-0 drop-shadow-sm [text-wrap:balance] md:text-7xl md:leading-[5rem]"
           style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}
         >
-          Companion for your university project
+          Made for Students, by Students.
         </h1>
         <p
           className="mt-6 animate-fade-up text-center text-gray-500 opacity-0 [text-wrap:balance] md:text-xl"
           style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
         >
-          An opinionated collection of components, hooks, and utilities for your
-          Next.js project.
+          A perfect companion for your university project where you can find any
+          resources you might need for your project.
         </p>
         <div
           className="mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0"
           style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
         >
-          <a
+          <Link
             className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
-            href={DEPLOY_URL}
-            target="_blank"
+            href="/courses"
             rel="noopener noreferrer"
           >
-            <svg
-              className="h-4 w-4 group-hover:text-black"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 4L20 20H4L12 4Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <p>Deploy to Vercel</p>
-          </a>
+            <p>See our courses</p>
+          </Link>
           <a
             className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
             href="https://github.com/steven-tey/precedent"
@@ -97,11 +83,7 @@ export default async function Home() {
             title={title}
             description={description}
             demo={
-              title === "Beautiful, reusable components" ? (
-                <ComponentGrid />
-              ) : (
-                demo
-              )
+              title === "Carefully crafted courses" ? <ComponentGrid /> : demo
             }
             large={large}
           />
@@ -113,9 +95,8 @@ export default async function Home() {
 
 const features = [
   {
-    title: "Beautiful, reusable components",
-    description:
-      "Pre-built beautiful, a11y-first components, powered by [Tailwind CSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), and [Framer Motion](https://framer.com/motion)",
+    title: "Carefully crafted courses",
+    description: "Our courses are designed keeping students in mind.",
     large: true,
   },
   {
@@ -125,13 +106,13 @@ const features = [
     demo: <WebVitals />,
   },
   {
-    title: "One-click Deploy",
+    title: "National ID Database",
     description:
-      "Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.",
+      "We provide you with a dummy national ID database for your academic project.",
     demo: (
       <a href={DEPLOY_URL}>
         <Image
-          src="https://vercel.com/button"
+          src="/images/icons/nid.png"
           alt="Deploy with Vercel"
           width={120}
           height={30}
@@ -141,29 +122,19 @@ const features = [
     ),
   },
   {
-    title: "Built-in Auth + Database",
+    title: "Payment gateway for you.",
     description:
-      "Precedent comes with authentication and database via [Auth.js](https://authjs.dev/) + [Prisma](https://prisma.io/)",
+      "Unidemy provides you with dummy payment gateway for your academic project.",
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <Image alt="Auth.js logo" src="/authjs.webp" width={50} height={50} />
-        <Image alt="Prisma logo" src="/prisma.svg" width={50} height={50} />
+        <Image
+          alt="Auth.js logo"
+          src="/images/icons/payment-gateway.png"
+          width={100}
+          height={100}
+        />
       </div>
     ),
-  },
-  {
-    title: "Hooks, utilities, and more",
-    description:
-      "Precedent offers a collection of hooks, utilities, and `@vercel/og`",
-    demo: (
-      <div className="grid grid-flow-col grid-rows-3 gap-10 p-10">
-        <span className="font-mono font-semibold">useIntersectionObserver</span>
-        <span className="font-mono font-semibold">useLocalStorage</span>
-        <span className="font-mono font-semibold">useScroll</span>
-        <span className="font-mono font-semibold">nFormatter</span>
-        <span className="font-mono font-semibold">capitalize</span>
-        <span className="font-mono font-semibold">truncate</span>
-      </div>
-    ),
+    large: true,
   },
 ];

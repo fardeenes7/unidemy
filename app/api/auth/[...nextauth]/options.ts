@@ -13,17 +13,6 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     GoogleProvider({
-      // profile(profile) {
-      //   let userRole = "user";
-      //   if (profile?.email === "fardeen.es7@gmail.com") {
-      //     userRole = "admin";
-      //   }
-      //   return {
-      //     ...profile,
-      //     id: profile.sub,
-      //     role: userRole,
-      //   };
-      // },
       clientId: process.env.GOOGLE_ID ?? "",
       clientSecret: process.env.GOOGLE_SECRET ?? "",
     }),
@@ -42,35 +31,38 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET ?? "",
     }),
   ],
-  // callbacks: {
-  //   async jwt({ token, user }) {
-  //     console.log("JWT Callback Accessed");
-  //     return token;
-  //   },
-  //   async session({ session, token }) {
-  //     console.log("Session Callback Accessed");
-  //     return session;
-  //   },
-  // },
   callbacks: {
-    // Ref: https://authjs.dev/guides/basics/role-based-access-control#persisting-the-role
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
         let userRole = "user";
-        if (user.email === "fardeen.es7@gmail.com") {
+        if (
+          user.email === "fardeen.es7@gmail.com" ||
+          user.email === "bilboyz-7352@pages.plusgoogle.com"
+        ) {
           userRole = "admin";
           user.role = userRole;
         }
+
         token.role = userRole;
         token.id = user.id;
       }
+      if (account?.access_token) {
+        token.accessToken = account.access_token;
+      }
+      if (account?.id_token) {
+        token.idToken = account.id_token;
+      }
+
       return token;
     },
-    // If you want to use the role in client components
     async session({ session, token }) {
       if (token) {
         session.user.role = token.role;
         session.user.id = token.id;
+        if (token.accessToken) {
+          session.accessToken = token.accessToken;
+          session.idToken = token.idToken;
+        }
       }
       return session;
     },

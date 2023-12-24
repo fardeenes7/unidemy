@@ -4,6 +4,8 @@ import prisma from "@/lib/prisma";
 
 export function getSession() {
   return getServerSession(authOptions) as Promise<{
+    accessToken: string;
+    idToken: string;
     user: {
       id: string;
       name: string;

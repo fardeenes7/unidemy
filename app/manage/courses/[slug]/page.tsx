@@ -4,7 +4,6 @@ import { notFound, redirect } from "next/navigation";
 import Lessons from "@/components/manage/lessons";
 import CreateLessonButton from "@/components/manage/create-lesson-button";
 import { DataTable } from "../../../../components/manage/data-table";
-import { columns } from "./columns";
 
 export default async function SitePosts({
   params,
