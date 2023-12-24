@@ -25,6 +25,8 @@ module.exports = {
       fontFamily: {
         display: ["var(--font-calsans)", "system-ui", "sans-serif"],
         default: ["var(--font-inter)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
+        sf: ["var(--font-sf)", "system-ui", "sans-serif"],
       },
       colors: {
         transparent: "transparent",

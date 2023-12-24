@@ -2,8 +2,8 @@ import { allPages } from "contentlayer/generated";
 import { Mdx } from "@/components/mdx-components";
 import { notFound } from "next/navigation";
 
-export default function Terms() {
-  let page = allPages.find((page) => page.slug === "/pages/terms");
+export default function About() {
+  let page = allPages.find((page) => page.slug === "/pages/about");
   if (!page) {
     notFound();
   }
@@ -14,9 +14,8 @@ export default function Terms() {
           className="animate-fade-up bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-5xl font-bold tracking-[-0.02em] text-transparent opacity-0 drop-shadow-sm [text-wrap:balance] md:text-6xl md:leading-[5rem]"
           style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}
         >
-          Terms of Service
+          About Us
         </h1>
-        <h2 className="text-center">Last Updated: {page.date}</h2>
       </div>
       <div className="z-10 my-10 grid w-full max-w-5xl animate-fade-up grid-cols-1 gap-5 px-5  xl:px-0">
         <Mdx code={page.body.code} />
