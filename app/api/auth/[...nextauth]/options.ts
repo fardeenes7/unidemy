@@ -60,8 +60,8 @@ export const authOptions: NextAuthOptions = {
         session.user.role = token.role;
         session.user.id = token.id;
         if (token.accessToken) {
-          session.user.accessToken = token.accessToken;
-          session.user.idToken = token.idToken;
+          session.accessToken = token.accessToken;
+          session.idToken = token.idToken;
         }
       }
       return session;
