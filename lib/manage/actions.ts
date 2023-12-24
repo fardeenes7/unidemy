@@ -8,7 +8,6 @@ import { getSession } from "@/lib/auth";
 import { put } from "@vercel/blob";
 import { customAlphabet } from "nanoid";
 import { getBlurDataURL } from "@/lib/manage/utils";
-import { d } from "@vercel/blob/dist/put-96a1f07e";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",

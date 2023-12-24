@@ -47,39 +47,24 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id;
       }
       if (account?.access_token) {
-        token.access_token = account.access_token;
-        token.id_token = account.id_token;
+        token.accessToken = account.access_token;
+      }
+      if (account?.id_token) {
+        token.idToken = account.id_token;
       }
 
       return token;
     },
-    // Ref: https://authjs.dev/guides/basics/role-based-access-control#persisting-the-role
-
-    // If you want to use the role in client components
     async session({ session, token }) {
       if (token) {
         session.user.role = token.role;
         session.user.id = token.id;
-        session.accessToken = token.access_token;
-        session.idToken = token.id_token;
+        if (token.accessToken) {
+          session.accessToken = token.accessToken;
+          session.idToken = token.idToken;
+        }
       }
       return session;
     },
-    // async signIn({ user, account, profile }) {
-    //   if (user) {
-    //     let userRole = "user";
-    //     if (user.email === "fardeen.es7@gmail.com") {
-    //       userRole = "admin";
-    //       user.role = userRole;
-    //     }
-    //   }
-    //   if (user.role === "admin" && account?.provider === "google") {
-    //     console.log("Admin signing in with Google");
-    //     // Redirect for additional scope
-    //     const redirectUrl = `/api/admin-scope`;
-    //     return redirectUrl;
-    //   }
-    //   return true;
-    // },
   },
 };
