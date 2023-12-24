@@ -3,10 +3,8 @@
 import * as React from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { Icons } from "@/components/docs/icons";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-// import { Icons } from "@/components/icons"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,21 +15,21 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/landing/nav/util";
 
-const components: { title: string; href: string; description: string }[] = [
+const resources: { title: string; href: string; description: string }[] = [
   {
-    title: "All Courses",
-    href: "/courses",
-    description: "View all of our courses",
+    title: "Documentation",
+    href: "/docs",
+    description: "Features and API Reference",
   },
   {
-    title: "Django Full Stack",
-    href: "/courses/django",
-    description: "Learn how to build a full stack application with Django",
+    title: "Guides",
+    href: "/guides",
+    description: "Learn how to use Unidemy",
   },
   {
-    title: "Introduction to Python",
-    href: "/courses/python",
-    description: "Learn the fundamentals of Python",
+    title: "Blog",
+    href: "/blog",
+    description: "Read about the latest updates",
   },
 ];
 
@@ -75,41 +73,35 @@ export default function NavigationMenuDemo() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Courses</NavigationMenuTrigger>
+          <Link href="/courses" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Courses
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul
               className={cn(
                 "grid w-[400px] gap-3 p-4",
-                components.length > 3
+                resources.length > 3
                   ? "md:w-[500px] md:grid-cols-2 lg:w-[600px]"
                   : "md:w-[300px] md:grid-cols-1 lg:w-[350px]",
               )}
             >
-              {components.map((component) => (
+              {resources.map((resource) => (
                 <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
+                  key={resource.title}
+                  title={resource.title}
+                  href={resource.href}
                 >
-                  {component.description}
+                  {resource.description}
                 </ListItem>
               ))}
             </ul>
           </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Docs
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/guides" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Guides
-            </NavigationMenuLink>
-          </Link>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
@@ -118,7 +110,7 @@ export default function NavigationMenuDemo() {
 
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
+  React.resourcePropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>

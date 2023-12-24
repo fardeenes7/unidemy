@@ -25,8 +25,7 @@ export default function NidPage() {
             </div>
           }
         >
-          {/* @ts-expect-error Server Component */}
-          <Courses courseId={decodeURIComponent(params.id)} />
+          <>NID LIST</>
         </Suspense>
       </div>
     </div>
