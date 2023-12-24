@@ -212,13 +212,13 @@ export default function Footer() {
           </div>
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
-            {menu.map((item) => (
-              <div>
+            {menu.map((item, id) => (
+              <div key={id}>
                 <p className="font-medium text-gray-900">{item.name}</p>
 
                 <ul className="mt-6 space-y-4 text-sm">
-                  {item.items.map((item) => (
-                    <li>
+                  {item.items.map((item, idx) => (
+                    <li key={idx}>
                       <a
                         href={item.href}
                         className="text-gray-700 transition hover:opacity-75"
