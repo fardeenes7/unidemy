@@ -1,7 +1,7 @@
 import { getSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import CreateCourseButton from "./create-course-button";
-import CreateCourseModal from "./modal/create-course";
+import CreateCourseModal from "../../app/manage/courses/(components)/create-course";
 import Link from "next/link";
 
 export default async function OverviewCoursesCTA() {

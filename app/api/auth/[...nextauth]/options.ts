@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 // import { db } from "@/lib/db";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import { profileEnd } from "console";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -15,6 +16,13 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_ID ?? "",
       clientSecret: process.env.GOOGLE_SECRET ?? "",
+      profile(profile) {
+        return {
+          id: profile.sub,
+          ...profile,
+          role: profile.role ? profile.role : "user",
+        };
+      },
     }),
     GithubProvider({
       profile(profile) {
@@ -24,7 +32,7 @@ export const authOptions: NextAuthOptions = {
         }
         return {
           ...profile,
-          role: userRole,
+          role: profile.role ? profile.role : "user",
         };
       },
       clientId: process.env.GITHUB_ID ?? "",
@@ -34,35 +42,21 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, account }) {
       if (user) {
-        let userRole = "user";
-        if (
-          user.email === "fardeen.es7@gmail.com" ||
-          user.email === "bilboyz-7352@pages.plusgoogle.com"
-        ) {
-          userRole = "admin";
-          user.role = userRole;
-        }
-
-        token.role = userRole;
+        // let userRole = "user";
+        token.role = user.role;
         token.id = user.id;
       }
-      if (account?.access_token) {
-        token.accessToken = account.access_token;
-      }
-      if (account?.id_token) {
-        token.idToken = account.id_token;
-      }
 
+      //   token.role = userRole;
+      //   token.id = user.id;
+      // }
+      // return token;
       return token;
     },
     async session({ session, token }) {
       if (token) {
         session.user.role = token.role;
         session.user.id = token.id;
-        if (token.accessToken) {
-          session.accessToken = token.accessToken;
-          session.idToken = token.idToken;
-        }
       }
       return session;
     },

@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Courses from "@/components/manage/courses";
 import PlaceholderCard from "@/components/manage/placeholder-card";
 import CreateCourseButton from "@/components/manage/create-course-button";
-import CreateCourseModal from "@/components/manage/modal/create-course";
+import CreateCourseModal from "@/app/manage/courses/(components)/create-course";
 
 export default function AllCourses({ params }: { params: { id: string } }) {
   return (

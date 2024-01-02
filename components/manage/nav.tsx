@@ -19,6 +19,8 @@ import {
   Library,
   CreditCard,
   Fingerprint,
+  Frame,
+  User,
 } from "lucide-react";
 import {
   useParams,
@@ -60,7 +62,7 @@ export default function Nav({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (segments[0] === "lesson" && slug) {
-      getCourseFromLessonId(slug).then((id) => {
+      getCourseFromLessonId(parseInt(slug)).then((id) => {
         setCourseId(id);
       });
     }
@@ -98,6 +100,33 @@ export default function Nav({ children }: { children: ReactNode }) {
           href: `/manage/courses/${slug}/settings`,
           isActive: segments.includes("settings"),
           icon: <Settings width={18} />,
+        },
+      ];
+    } else if (segments[0] === "settings") {
+      return [
+        {
+          name: "Back to Dashboard",
+          href: "/manage",
+          icon: <ArrowLeft width={18} />,
+        },
+        {
+          name: "General",
+          href: `/manage/settings`,
+          isActive: segments.length === 1,
+          icon: <Settings width={18} />,
+        },
+        {
+          name: "Teacher",
+          href: `/manage/settings/teacher`,
+          isActive: segments.includes("teacher"),
+          icon: <User width={18} />,
+        },
+
+        {
+          name: "Organization",
+          href: `/manage/settings/organization`,
+          isActive: segments.includes("organization"),
+          icon: <Frame width={18} />,
         },
       ];
     } else if (segments[0] === "lesson" && slug) {

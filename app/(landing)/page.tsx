@@ -26,7 +26,8 @@ export default async function Home() {
 
   return (
     <>
-      <div className="z-10 w-full max-w-2xl px-5 xl:px-0">
+      <div className="fixed top-0 z-0 h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-cyan-100" />
+      <div className="z-10 mt-10 w-full max-w-2xl px-5 xl:px-0">
         <a
           href="/about"
           target="_blank"
@@ -76,7 +77,7 @@ export default async function Home() {
           </a>
         </div>
       </div>
-      <div className="my-10 grid w-full max-w-screen-xl animate-fade-up grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
+      <div className="mt-10 grid w-full max-w-screen-xl animate-fade-up grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
         {features.map(({ title, description, demo, large }) => (
           <Card
             key={title}

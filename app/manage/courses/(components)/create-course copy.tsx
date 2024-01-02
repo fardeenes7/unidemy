@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 import { cn } from "@/lib/utils";
 import LoadingDots from "@/components/manage/icons/loading-dots";
-import { useModal } from "./provider";
+import { useModal } from "../../../../components/manage/modal/provider";
 import va from "@vercel/analytics";
 import { useEffect, useState } from "react";
 import { getPlaylistList } from "@/lib/manage/actions";
@@ -14,11 +14,9 @@ import { getPlaylistList } from "@/lib/manage/actions";
 export default function CreateCourseModal() {
   const router = useRouter();
   const modal = useModal();
-  const playlistList = getPlaylistList();
 
   const [data, setData] = useState({
     name: "",
-    slug: "",
     description: "",
     playlistId: "",
   });
@@ -78,14 +76,14 @@ export default function CreateCourseModal() {
 
         <div className="flex flex-col space-y-2">
           <label htmlFor="slug" className="text-sm font-medium text-stone-500">
-            Slug
+            Course Type
           </label>
           <div className="flex w-full max-w-md">
             <input
-              name="slug"
+              name="type"
               type="text"
               placeholder="slug"
-              value={data.slug}
+              value={data.name}
               autoCapitalize="off"
               pattern="[a-zA-Z0-9\-]+" // only allow lowercase letters, numbers, and dashes
               maxLength={32}
@@ -94,30 +92,6 @@ export default function CreateCourseModal() {
             />
           </div>
         </div>
-        {/* <div className="flex flex-col space-y-2">
-          <label htmlFor="slug" className="text-sm font-medium text-stone-500">
-            Youtube Playlist ID{" "}
-            <a
-              href="https://studio.youtube.com/channel/UCbFuqIt1YTKCeRh5bkrRO9g"
-              target="_blank"
-              className="ml-2 rounded-lg border bg-stone-100 px-3 py-1 text-xs font-bold"
-            >
-              Channel<span>↗</span>
-            </a>
-          </label>
-          <div className="flex w-full max-w-md">
-            <input
-              name="plyalistId"
-              type="text"
-              placeholder="Playlist Id"
-              autoCapitalize="off"
-              maxLength={32}
-              required
-              className="w-full rounded-lg border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-stone-600 placeholder:text-stone-400 focus:border-black focus:outline-none focus:ring-black dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700 dark:focus:ring-white"
-            />
-          </div>
-        </div> */}
-
         <div className="flex flex-col space-y-2">
           <label
             htmlFor="description"

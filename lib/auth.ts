@@ -47,7 +47,7 @@ export function withCourseAuth(action: any) {
 export function withLessonAuth(action: any) {
   return async (
     formData: FormData | null,
-    lessonId: string,
+    lessonId: number,
     key: string | null,
   ) => {
     const session = await getSession();

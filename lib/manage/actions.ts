@@ -1,13 +1,14 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Lesson, Course } from "@prisma/client";
+import { Lesson, Course, CourseType } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 import { withCourseAuth, withLessonAuth } from "../auth";
 import { getSession } from "@/lib/auth";
 import { put } from "@vercel/blob";
 import { customAlphabet } from "nanoid";
 import { getBlurDataURL } from "@/lib/manage/utils";
+import { Cloud } from "lucide-react";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -24,49 +25,6 @@ const getAccessToken = async () => {
   return session.accessToken;
 };
 
-const createPlaylist = async (name: string, description: string) => {
-  const url = `${process.env.YOUTUBE_API_URL}/playlists?part=snippet%2Cstatus&key=${process.env.YOUTUBE_DATA_API}`;
-  const accessToken = await getAccessToken();
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({
-      snippet: {
-        title: name,
-        description: description,
-      },
-      status: {
-        privacyStatus: "private",
-      },
-    }),
-  });
-  const data = await response.json();
-  return data.id;
-};
-
-const deletePlaylist = async (playlistId: string, accessToken: string) => {
-  const url = `${process.env.YOUTUBE_API_URL}/playlists?id=${playlistId}&key=${process.env.YOUTUBE_DATA_API}`;
-  const response = await fetch(url, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const data = await response.json();
-  return data;
-};
-
-export const getPlaylistList = async () => {
-  const url = `${process.env.YOUTUBE_API_URL}/playlists?part=snippet%2CcontentDetails&channelId=${process.env.YOUTUBE_CHANNEL_ID}&maxResults=25&key=${process.env.YOUTUBE_DATA_API}`;
-  const response = await fetch(url, {});
-  const data = await response.json();
-  console.log("data: ", data);
-};
-
 export const createCourse = async (formData: FormData) => {
   const session = await getSession();
   if (!session?.user.id) {
@@ -74,32 +32,28 @@ export const createCourse = async (formData: FormData) => {
       error: "Not authenticated",
     };
   }
-  const name = formData.get("name") as string;
+  const title = formData.get("title") as string;
   const description = formData.get("description") as string;
-  const slug = formData.get("slug") as string;
-  // const playlistId = formData.get("playlistId") as string;
-  const playlistId = await createPlaylist(name, description);
-  if (!playlistId) {
-    return {
-      error: "Error creating playlist",
-    };
-  }
-
+  const coursetype = formData.get("type") as string;
+  const type: CourseType = coursetype === "Recorded" ? "Recorded" : "Live";
+  // get total number of courses
+  const count = await prisma.course.count();
+  // create slug using the first letters of the title
+  const slug = `${title
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word[0])
+    .join("")}${count}`;
   try {
     const response = await prisma.course.create({
       data: {
-        name,
+        title,
         description,
+        type,
         slug,
-        playlistId: playlistId,
-        user: {
-          connect: {
-            id: session.user.id,
-          },
-        },
+        userId: session.user.id,
       },
     });
-    await revalidateTag(`${process.env.NEXT_PUBLIC_APP_URL}-metadata`);
     return response;
   } catch (error: any) {
     if (error.code === "P2002") {
@@ -107,6 +61,7 @@ export const createCourse = async (formData: FormData) => {
         error: `This slug is already taken`,
       };
     } else {
+      console.log("Error: ", error.message);
       return {
         error: error.message,
       };
@@ -114,13 +69,15 @@ export const createCourse = async (formData: FormData) => {
   }
 };
 
+
+
+
 export const updateCourse = withCourseAuth(
   async (formData: FormData, course: Course, key: string) => {
     const value = formData.get(key) as string;
 
     try {
       let response;
-
       if (key === "image" || key === "logo") {
         if (!process.env.BLOB_READ_WRITE_TOKEN) {
           return {
@@ -131,6 +88,8 @@ export const updateCourse = withCourseAuth(
 
         const file = formData.get(key) as File;
         const filename = `${nanoid()}.${file.type.split("/")[1]}`;
+
+        // Cloudinary upload
 
         const { url } = await put(filename, file, {
           access: "public",
@@ -145,6 +104,15 @@ export const updateCourse = withCourseAuth(
           data: {
             [key]: url,
             ...(blurhash && { imageBlurhash: blurhash }),
+          },
+        });
+      } else if (key === "price" || key === "discountedPrice") {
+        response = await prisma.course.update({
+          where: {
+            id: course.id,
+          },
+          data: {
+            [key]: parseInt(value),
           },
         });
       } else {
@@ -198,7 +166,7 @@ export const deleteCourse = withCourseAuth(
   },
 );
 
-export const getCourseFromLessonId = async (lessonId: string) => {
+export const getCourseFromLessonId = async (lessonId: number) => {
   const lesson = await prisma.lesson.findUnique({
     where: {
       id: lessonId,
@@ -284,11 +252,6 @@ export const updateLesson = async (data: Lesson) => {
       },
     });
 
-    await revalidateTag(`${process.env.NEXT_PUBLIC_APP_URL}-lessons`);
-    await revalidateTag(`${process.env.NEXT_PUBLIC_APP_URL}-${lesson.slug}`);
-
-    // if the course has a custom domain, we need to revalidate those tags too
-
     return response;
   } catch (error: any) {
     return {
@@ -338,9 +301,6 @@ export const updateLessonMetadata = withLessonAuth(
           },
         });
       }
-
-      await revalidateTag(`${process.env.NEXT_PUBLIC_APP_URL}-lessons`);
-      await revalidateTag(`${process.env.NEXT_PUBLIC_APP_URL}-${lesson.slug}`);
 
       return response;
     } catch (error: any) {

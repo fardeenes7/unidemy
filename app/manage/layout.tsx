@@ -23,7 +23,7 @@ export default async function ManageLayout({
             <Profile />
           </Suspense>
         </Nav>
-        <div className="min-h-screen dark:bg-black sm:pl-60">
+        <div className="min-h-screen bg-gray-50 dark:bg-black sm:pl-60">
           <div className="p-16">{children}</div>
         </div>
       </div>
