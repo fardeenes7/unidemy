@@ -2,14 +2,30 @@ import { ReactNode } from "react";
 import Form from "@/components/manage/form";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { editUser } from "@/lib/manage/actions";
+import { editUser, updateTeacher } from "@/lib/manage/actions";
 import TeacherAlert from "../../(components)/TeacherAlert";
+import SocialLinkForm from "@/components/manage/form/socialLinkForm";
+import prisma from "@/lib/prisma";
+
+const getTeacher = async (session: any) => {
+  const teacher = prisma.teacher.findUnique({
+    where: {
+      userId: session.user.id,
+    },
+  });
+  if (!teacher) {
+    return null;
+  }
+  return teacher;
+};
 
 export default async function SettingsPage() {
   const session = await getSession();
   if (!session) {
     redirect("/login");
   }
+  const teacher = await getTeacher(session);
+
   return (
     <div className="flex max-w-screen-xl flex-col space-y-12 ">
       <div className="flex flex-col space-y-6">
@@ -18,18 +34,19 @@ export default async function SettingsPage() {
         </h1>
         <TeacherAlert />
         <Form
-          title="Name"
-          description="Your name on this app."
-          helpText="Please use 32 characters maximum."
+          title="Bio"
+          description="Your bio for teacher profile"
+          helpText="Please use 150 characters maximum."
           inputAttrs={{
-            name: "name",
+            name: "bio",
             type: "text",
-            defaultValue: session.user.name!,
-            placeholder: "Brendon Urie",
-            maxLength: 32,
+            defaultValue: teacher?.bio ?? "",
+            placeholder: "I love teaching!",
+            maxLength: 150,
           }}
-          handleSubmit={editUser}
+          handleSubmit={updateTeacher}
         />
+        <SocialLinkForm />
         <Form
           title="Email"
           description="Your email on this app."

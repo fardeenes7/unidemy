@@ -13,10 +13,3 @@ const TopLoadingBar = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default TopLoadingBar;
-
-// const TopLoadingBar = () => {
-//   console.log("TopLoadingBar");
-//   return <NextNProgress />;
-// };
-
-// export default TopLoadingBar;

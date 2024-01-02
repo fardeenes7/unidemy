@@ -17,6 +17,31 @@ export function getSession() {
   } | null>;
 }
 
+export function withTeacherAuth(action: any) {
+  return async (formData: FormData | null, slug: null, key: string | null) => {
+    const session = await getSession();
+    if (!session) {
+      return {
+        error: "Not authenticated",
+      };
+    }
+    let teacher = await prisma.teacher.findUnique({
+      where: {
+        userId: session?.user.id!,
+      },
+    });
+    if (!teacher) {
+      teacher = await prisma.teacher.create({
+        data: {
+          userId: session?.user.id!,
+        },
+      });
+    }
+
+    return action(formData, teacher, key);
+  };
+}
+
 export function withCourseAuth(action: any) {
   return async (
     formData: FormData | null,

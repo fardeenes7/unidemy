@@ -64,6 +64,15 @@ model Transaction {
   @@index([userId])
 }
 
+model Sociallink{
+  id       String   @id @default(cuid())
+  name     String
+  url      String
+  teacherId String
+  teacher  Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  @@index([teacherId])
+}
+
 model Teacher{
   id        String   @id @default(cuid())
   image    String?
@@ -72,6 +81,7 @@ model Teacher{
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   courses   Course[]
+  links     Sociallink[]
   @@index([userId])
   @@unique([userId])
 

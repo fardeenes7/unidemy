@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 import { toast } from "sonner";
-import Uploader from "./imageForm";
+import Uploader from "./uploader";
 import va from "@vercel/analytics";
 
 export default function Form({
@@ -82,7 +82,7 @@ export default function Form({
               <option value="font-work">Work Sans</option>
             </select>
           </div>
-        ) : inputAttrs.name === "description" ? (
+        ) : inputAttrs.name === "description" || inputAttrs.name === "bio" ? (
           <textarea
             {...inputAttrs}
             rows={3}

@@ -1,14 +1,15 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Lesson, Course, CourseType } from "@prisma/client";
+import { Lesson, Course, CourseType, Teacher } from "@prisma/client";
 import { revalidateTag } from "next/cache";
-import { withCourseAuth, withLessonAuth } from "../auth";
+import { withCourseAuth, withLessonAuth, withTeacherAuth } from "../auth";
 import { getSession } from "@/lib/auth";
 import { put } from "@vercel/blob";
 import { customAlphabet } from "nanoid";
 import { getBlurDataURL } from "@/lib/manage/utils";
 import { Cloud } from "lucide-react";
+import { connect } from "http2";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -44,6 +45,11 @@ export const createCourse = async (formData: FormData) => {
     .split(" ")
     .map((word) => word[0])
     .join("")}${count}`;
+  const teacher = await prisma.teacher.findUnique({
+    where: {
+      userId: session.user.id,
+    },
+  });
   try {
     const response = await prisma.course.create({
       data: {
@@ -52,6 +58,11 @@ export const createCourse = async (formData: FormData) => {
         type,
         slug,
         userId: session.user.id,
+        teachers: {
+          connect: {
+            id: teacher?.id,
+          },
+        },
       },
     });
     return response;
@@ -69,13 +80,50 @@ export const createCourse = async (formData: FormData) => {
   }
 };
 
-
-
+export const updateTeacher = withTeacherAuth(
+  async (formData: FormData, teacher: Teacher, key: string) => {
+    try {
+      let response;
+      if (key.includes("social-")) {
+        const name = key.replace("social-", "") as string;
+        const url = formData.get(name) as string;
+        console.log("Creating social link: ", name, url);
+        response = await prisma.sociallink.create({
+          data: {
+            name: name,
+            url: url,
+            teacherId: teacher?.id,
+          },
+        });
+      } else {
+        const value = formData.get(key) as string;
+        response = await prisma.teacher.update({
+          where: {
+            id: teacher.id,
+          },
+          data: {
+            [key]: value,
+          },
+        });
+      }
+      return response;
+    } catch (error: any) {
+      if (error.code === "P2002") {
+        return {
+          error: `This ${key} is already taken`,
+        };
+      } else {
+        return {
+          error: error.message,
+        };
+      }
+    }
+  },
+);
 
 export const updateCourse = withCourseAuth(
   async (formData: FormData, course: Course, key: string) => {
     const value = formData.get(key) as string;
-
     try {
       let response;
       if (key === "image" || key === "logo") {

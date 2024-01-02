@@ -121,13 +121,6 @@ export default function Nav({ children }: { children: ReactNode }) {
           isActive: segments.includes("teacher"),
           icon: <User width={18} />,
         },
-
-        {
-          name: "Organization",
-          href: `/manage/settings/organization`,
-          isActive: segments.includes("organization"),
-          icon: <Frame width={18} />,
-        },
       ];
     } else if (segments[0] === "lesson" && slug) {
       return [
