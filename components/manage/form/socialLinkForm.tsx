@@ -83,7 +83,7 @@ export default function SocialLinkForm() {
             </SelectTrigger>
             <SelectContent>
               {sites.map(({ name, icon }) => (
-                <SelectItem value={name} className="items-center justify-start">
+                <SelectItem key={name} value={name} className="items-center justify-start">
                   {icon}
                   {name}
                 </SelectItem>
