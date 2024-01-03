@@ -68,6 +68,7 @@ const Contributors = async () => {
                     <a
                       href={contributor.html_url}
                       target="_blank"
+                      rel="noreferrer"
                       className="flex items-center justify-center text-gray-600 hover:text-gray-800 dark:text-gray-100"
                     >
                       <Github height={20} width={20} className="mr-2" />

@@ -1,7 +1,7 @@
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
-import CourseCard from "../../../(landing)/courses/(components)/course-card";
+import CourseCard from "./course-card";
 import Image from "next/image";
 
 export default async function Courses({ limit }: { limit?: number }) {
@@ -20,7 +20,7 @@ export default async function Courses({ limit }: { limit?: number }) {
   return courses.length > 0 ? (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {courses.map((course) => (
-        <CourseCard key={course.id} data={course} landing={false} />
+        <CourseCard key={course.id} data={course} />
       ))}
     </div>
   ) : (
