@@ -5,23 +5,19 @@ import Link from "next/link";
 import { useParams, useSelectedLayoutSegment } from "next/navigation";
 
 export default function SiteSettingsNav() {
-  const { id } = useParams() as { id?: string };
+  const { slug } = useParams() as { slug?: string };
   const segment = useSelectedLayoutSegment();
 
   const navItems = [
     {
       name: "General",
-      href: `/site/${id}/settings`,
+      href: `/manage/courses/${slug}/settings`,
       segment: null,
     },
-    {
-      name: "Domains",
-      href: `/site/${id}/settings/domains`,
-      segment: "domains",
-    },
+
     {
       name: "Appearance",
-      href: `/site/${id}/settings/appearance`,
+      href: `/manage/courses/${slug}/settings/appearance`,
       segment: "appearance",
     },
   ];
