@@ -53,7 +53,7 @@ export default function LessonCard({
           rel="noreferrer"
           className="truncate rounded-md bg-stone-100 px-2 py-1 text-sm font-medium text-stone-600 transition-colors hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-400 dark:hover:bg-stone-700"
         >
-          Course: {data.course?.name} ↗
+          Course: {data.course?.title} ↗
         </a>
       </div>
     </div>

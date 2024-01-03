@@ -10,17 +10,15 @@ import LoadingDots from "./icons/loading-dots";
 import { ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 
-type LessonWithSite = Lesson & { site: { subdomain: string | null } | null };
+type LessonWithCourse = Lesson & { course: { slug: string | null } | null };
 
-export default function Editor({ lesson }: { lesson: LessonWithSite }) {
+export default function Editor({ lesson }: { lesson: LessonWithCourse }) {
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
-  const [data, setData] = useState<LessonWithSite>(lesson);
+  const [data, setData] = useState<LessonWithCourse>(lesson);
   const [hydrated, setHydrated] = useState(false);
 
-  const url = process.env.NEXT_PUBLIC_VERCEL_ENV
-    ? `https://${data.site?.subdomain}.${process.env.NEXT_PUBLIC_APP_URL}/${data.slug}`
-    : `http://${data.site?.subdomain}.localhost:3000/${data.slug}`;
+  const url = `https://${process.env.NEXT_PUBLIC_APP_URL}/${data.course?.slug}`;
 
   // listen to CMD + S and override the default behavior
   useEffect(() => {
