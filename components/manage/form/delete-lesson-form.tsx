@@ -19,7 +19,7 @@ export default function DeleteLessonForm({
     <form
       action={async (data: FormData) =>
         window.confirm("Are you sure you want to delete this lesson?") &&
-        deleteLesson(data, id, "delete").then((res) => {
+        deleteLesson(data, parseInt(id), "delete").then((res) => {
           if (res.error) {
             toast.error(res.error);
           } else {
