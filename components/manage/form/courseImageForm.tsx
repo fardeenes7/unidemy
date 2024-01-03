@@ -10,14 +10,16 @@ import Uploader from "./imageForm";
 import va from "@vercel/analytics";
 import { useState } from "react";
 import { set } from "date-fns";
-import { Pencil, Radio, Video } from "lucide-react";
+import { Pencil } from "lucide-react";
+import { UploadDropzone } from "@/lib/uploadthing";
 
-export default function Form({
+export default function CourseImageForm({
   title,
   description,
   helpText,
   inputAttrs,
   handleSubmit,
+  endpoint,
 }: {
   title: string;
   description: string;
@@ -31,6 +33,7 @@ export default function Form({
     pattern?: string;
   };
   handleSubmit: any;
+  endpoint: any;
 }) {
   const { slug } = useParams() as { slug?: string };
   const router = useRouter();
@@ -40,22 +43,24 @@ export default function Form({
     setEditMode(false);
     router.refresh();
   };
+  const [data, setData] = useState(new FormData());
+
   return (
     <form
-      action={async (data: FormData) => {
-        handleSubmit(data, slug, inputAttrs.name).then(async (res: any) => {
+      action={async () => {
+        handleSubmit(data, slug, "image").then(async (res: any) => {
           setEditMode(false);
           if (res.error) {
             toast.error(res.error);
           } else {
-            va.track(`Updated ${inputAttrs.name}`, slug ? { slug } : {});
+            va.track(`Updated course image`, slug ? { slug } : {});
             if (slug) {
               router.refresh();
             } else {
               await update();
               router.refresh();
             }
-            toast.success(`Successfully updated ${inputAttrs.name}!`);
+            toast.success(`Successfully updated course image!`);
           }
         });
       }}
@@ -63,8 +68,8 @@ export default function Form({
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
         <div className="flex items-center justify-between">
-          <h2 className="font-display text-xl dark:text-white">{title}</h2>
-          {inputAttrs.name != "type" && !editMode && (
+          <h2 className="font-display text-xl dark:text-white">Course Image</h2>
+          {!editMode && (
             <button
               className={cn(
                 "flex items-center justify-center gap-2 rounded-lg border border-stone-200 bg-stone-100 px-4 py-2 text-sm text-black transition-all hover:bg-white hover:text-black  focus:outline-none dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-stone-800",
@@ -77,61 +82,38 @@ export default function Form({
             </button>
           )}
         </div>
-        {editMode && (
-          <p className="text-sm text-stone-500 dark:text-stone-400">
-            {description}
-          </p>
-        )}
-
-        {inputAttrs.name === "image" || inputAttrs.name === "logo" ? (
-          <Uploader
-            defaultValue={inputAttrs.defaultValue}
-            name={inputAttrs.name}
-            editMode={editMode}
-          />
-        ) : inputAttrs.name === "type" ? (
-          <div className="flex max-w-sm items-center overflow-hidden ">
-            <div className="text-sm">
-              {inputAttrs.defaultValue != "Live" ? (
-                <div className="flex items-center space-x-2 ">
-                  <Radio className="h-5 w-5 text-red-500" />
-                  <span>Live Class</span>
-                </div>
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <Video className="h-5 w-5 text-red-500" />
-                  <span>Recorded</span>
-                </div>
-              )}
-            </div>
+        {editMode ? (
+          <div>
+            <p className="text-sm text-stone-500 dark:text-stone-400">
+              {description}
+            </p>
+            <UploadDropzone
+              className="ut-button:w-full ut-label:text-slate-800 ut-button:ut-uploading:h-4"
+              appearance={{
+                button:
+                  "bg-gray-700 ut-uploading:bg-gray-400 ut-uploading:after:bg-gray-800 text-white text-sm rounded-md ut-uploading:h-3",
+              }}
+              endpoint={endpoint}
+              onClientUploadComplete={(res) => {
+                setData((prev) => {
+                  prev.set("image", res[0].url);
+                  return prev;
+                });
+              }}
+              onUploadError={(err) => {
+                toast.error(err.message);
+              }}
+            ></UploadDropzone>
           </div>
-        ) : editMode ? (
-          inputAttrs.name === "description" ? (
-            <textarea
-              {...inputAttrs}
-              rows={3}
-              required
-              className="w-full max-w-xl rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-            />
-          ) : inputAttrs.type === "number" ? (
-            <input
-              {...inputAttrs}
-              required
-              pattern="[0-9]*"
-              min={0}
-              className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
-            />
-          ) : (
-            <input
-              {...inputAttrs}
-              required
-              className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+        ) : (
+          inputAttrs.defaultValue && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={inputAttrs.defaultValue as string}
+              alt="Preview"
+              className="aspect-video h-full w-full rounded-md border object-cover"
             />
           )
-        ) : (
-          <p className="text-md font-bold text-stone-500 dark:text-stone-400">
-            {inputAttrs.defaultValue ?? "N/A"}
-          </p>
         )}
       </div>
       {editMode && (

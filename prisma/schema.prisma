@@ -105,6 +105,7 @@ model User {
   posts         Post[]
   purchases     Purchase[]
   transactions  Transaction[]
+  reviews       CourseReview[]
 }
 
 model VerificationToken {
@@ -216,6 +217,21 @@ enum CourseType {
   Live
 }
 
+model CourseReview{
+  id        Int   @id @default(autoincrement())
+  rating    Int
+  comment   String?
+  courseId  String
+  userId    String
+  createdAt DateTime @default(now())
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([courseId, userId])
+  @@index([courseId])
+  @@index([userId])
+
+}
+
 model Course {
   id            String   @id @default(cuid())
   title         String?
@@ -238,6 +254,7 @@ model Course {
   institute     Institute? @relation(fields: [instituteId], references: [id], onDelete: SetNull, onUpdate: NoAction)
   category      CourseCategory? @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   teachers      Teacher[]
+  reviews       CourseReview[]
 
   @@index([userId])
   @@index([categoryId])

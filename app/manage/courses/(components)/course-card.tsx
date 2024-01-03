@@ -1,7 +1,7 @@
 import BlurImage from "@/components/manage/blur-image";
 import { placeholderBlurhash, random } from "@/lib/manage/utils";
 import { Course } from "@prisma/client";
-import { BarChart, ExternalLink } from "lucide-react";
+import { BarChart, ExternalLink, Star } from "lucide-react";
 import Link from "next/link";
 
 export default function CourseCard({
@@ -23,17 +23,17 @@ export default function CourseCard({
         className="flex flex-col overflow-hidden rounded-lg"
       >
         <BlurImage
-          alt={data.name ?? "Card thumbnail"}
+          alt={data.title ?? "Card thumbnail"}
           width={500}
           height={400}
           className="h-44 object-cover"
-          src={data.image ?? `/api/og?type=course&title=${data.name}`}
+          src={data.image ?? `/api/og?type=course&title=${data.title}`}
           placeholder="blur"
           blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
         />
         <div className="border-t border-stone-200 p-4 dark:border-stone-700">
           <h3 className="my-0 truncate font-display text-xl font-bold tracking-wide dark:text-white">
-            {data.name}
+            {data.title}
           </h3>
           <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
             {data.description}

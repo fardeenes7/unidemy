@@ -31,7 +31,7 @@ export default async function CourseAnalyticsLayout({
     <>
       <div className="flex flex-col items-center space-x-4 space-y-2 sm:flex-row sm:space-y-0">
         <h1 className="font-display text-xl font-bold dark:text-white sm:text-3xl">
-          Settings for {data.name}
+          Settings for {data.title}
         </h1>
         <a
           href={

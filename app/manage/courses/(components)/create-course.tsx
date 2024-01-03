@@ -27,17 +27,6 @@ export default function CreateCourseModal() {
     description: "",
   });
 
-  // useEffect(() => {
-  //   setData((prev) => ({
-  //     ...prev,
-  //     slug: prev.name
-  //       .toLowerCase()
-  //       .trim()
-  //       .replace(/[\W_]+/g, "-"),
-  //   }));
-  //   console.log(data);
-  // }, [data.name]);
-
   return (
     <form
       action={async (data: FormData) =>

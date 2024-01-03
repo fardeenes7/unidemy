@@ -126,35 +126,36 @@ export const updateCourse = withCourseAuth(
     const value = formData.get(key) as string;
     try {
       let response;
-      if (key === "image" || key === "logo") {
-        if (!process.env.BLOB_READ_WRITE_TOKEN) {
-          return {
-            error:
-              "Missing BLOB_READ_WRITE_TOKEN token. Note: Vercel Blob is currently in beta – please fill out this form for access: https://tally.so/r/nPDMNd",
-          };
-        }
+      // if (key === "image" || key === "logo") {
+      //   if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      //     return {
+      //       error:
+      //         "Missing BLOB_READ_WRITE_TOKEN token. Note: Vercel Blob is currently in beta – please fill out this form for access: https://tally.so/r/nPDMNd",
+      //     };
+      //   }
 
-        const file = formData.get(key) as File;
-        const filename = `${nanoid()}.${file.type.split("/")[1]}`;
+      //   const file = formData.get(key) as File;
+      //   const filename = `${nanoid()}.${file.type.split("/")[1]}`;
 
-        // Cloudinary upload
+      //   // Cloudinary upload
 
-        const { url } = await put(filename, file, {
-          access: "public",
-        });
+      //   const { url } = await put(filename, file, {
+      //     access: "public",
+      //   });
 
-        const blurhash = key === "image" ? await getBlurDataURL(url) : null;
+      //   const blurhash = key === "image" ? await getBlurDataURL(url) : null;
 
-        response = await prisma.course.update({
-          where: {
-            id: course.id,
-          },
-          data: {
-            [key]: url,
-            ...(blurhash && { imageBlurhash: blurhash }),
-          },
-        });
-      } else if (key === "price" || key === "discountedPrice") {
+      //   response = await prisma.course.update({
+      //     where: {
+      //       id: course.id,
+      //     },
+      //     data: {
+      //       [key]: url,
+      //       ...(blurhash && { imageBlurhash: blurhash }),
+      //     },
+      //   });
+      // } else
+      if (key === "price" || key === "discountedPrice") {
         response = await prisma.course.update({
           where: {
             id: course.id,

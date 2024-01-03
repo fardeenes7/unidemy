@@ -7,7 +7,6 @@ export async function getCourseData(slug: string) {
   return await unstable_cache(async () => {
     return prisma.course.findUnique({
       where: slug ? { slug } : { slug: slug },
-      include: { user: true },
     });
   })();
 }
@@ -27,7 +26,6 @@ export async function getLessonsForCourse(domain: string) {
         select: {
           title: true,
           description: true,
-          slug: true,
           image: true,
           imageBlurhash: true,
           createdAt: true,
@@ -47,52 +45,50 @@ export async function getLessonsForCourse(domain: string) {
   )();
 }
 
-export async function getLessonData(slug: string) {
-  return await unstable_cache(async () => {
-    const data = await prisma.lesson.findFirst({
-      where: {
-        slug: slug,
-        published: true,
-      },
-      include: {
-        course: {
-          include: {
-            user: true,
-          },
-        },
-      },
-    });
+// export async function getLessonData(id: number) {
+//   return await unstable_cache(async () => {
+//     const data = await prisma.lesson.findFirst({
+//       where: {
+//         id: id,
+//         published: true,
+//       },
+//       include: {
+//         course: {
+//           include: {},
+//         },
+//       },
+//     });
 
-    if (!data) return null;
+//     if (!data) return null;
 
-    const [mdxSource, adjacentLessons] = await Promise.all([
-      getMdxSource(data.content!),
-      prisma.lesson.findMany({
-        where: {
-          course: slug ? { slug } : { slug: slug },
-          published: true,
-          NOT: {
-            id: data.id,
-          },
-        },
-        select: {
-          slug: true,
-          title: true,
-          createdAt: true,
-          description: true,
-          image: true,
-          imageBlurhash: true,
-        },
-      }),
-    ]);
+//     const [mdxSource, adjacentLessons] = await Promise.all([
+//       getMdxSource(data.content!),
+//       prisma.lesson.findMany({
+//         where: {
+//           course: slug ? { slug } : { slug: slug },
+//           published: true,
+//           NOT: {
+//             id: data.id,
+//           },
+//         },
+//         select: {
+//           slug: true,
+//           title: true,
+//           createdAt: true,
+//           description: true,
+//           image: true,
+//           imageBlurhash: true,
+//         },
+//       }),
+//     ]);
 
-    return {
-      ...data,
-      mdxSource,
-      adjacentLessons,
-    };
-  })();
-}
+//     return {
+//       ...data,
+//       mdxSource,
+//       adjacentLessons,
+//     };
+//   })();
+// }
 
 async function getMdxSource(lessonContents: string) {
   // transforms links like <link> to [link](link) as MDX doesn't support <link> syntax

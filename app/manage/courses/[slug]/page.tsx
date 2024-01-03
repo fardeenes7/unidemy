@@ -6,6 +6,7 @@ import CreateLessonButton from "@/components/manage/create-lesson-button";
 import { DataTable } from "../../../../components/manage/data-table";
 import Form from "@/components/manage/form/miniform";
 import { updateCourse } from "@/lib/manage/actions";
+import CourseImageForm from "@/components/manage/form/courseImageForm";
 
 export default async function SitePosts({
   params,
@@ -105,7 +106,7 @@ export default async function SitePosts({
             description="The discounted price of your course."
             helpText="This is the price users will buy the course at."
             inputAttrs={{
-              name: "price",
+              name: "discountedPrice",
               type: "number",
               defaultValue: "" + data?.discountedPrice!,
               placeholder: "1000",
@@ -113,10 +114,23 @@ export default async function SitePosts({
             }}
             handleSubmit={updateCourse}
           />
+          <Form
+            title="Course type"
+            description="Course type can't be edited"
+            helpText=""
+            inputAttrs={{
+              name: "type",
+              type: "text",
+              defaultValue: "" + data?.type!,
+              placeholder: "1000",
+              maxLength: 150,
+            }}
+            handleSubmit={updateCourse}
+          />
         </div>
         {/* right column */}
-        <div>
-          <Form
+        <div className="flex flex-col space-y-4">
+          <CourseImageForm
             title="Course Banner"
             description="The banner of your course. This will be used as the meta image on Google as well."
             helpText="Please upload jpeg or png only."
@@ -128,6 +142,7 @@ export default async function SitePosts({
               maxLength: 32,
             }}
             handleSubmit={updateCourse}
+            endpoint="courseImage"
           />
         </div>
       </div>

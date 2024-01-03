@@ -1,7 +1,7 @@
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
-import CourseCard from "./course-card";
+import CourseCard from "../../../(landing)/courses/(components)/course-card";
 import Image from "next/image";
 
 export default async function Courses({ limit }: { limit?: number }) {

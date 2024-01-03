@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Courses from "@/components/manage/courses";
+import Courses from "@/app/manage/courses/(components)/courses";
 import PlaceholderCard from "@/components/manage/placeholder-card";
 import CreateCourseButton from "@/components/manage/create-course-button";
 import CreateCourseModal from "@/app/manage/courses/(components)/create-course";

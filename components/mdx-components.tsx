@@ -5,12 +5,13 @@ import { useMDXComponent } from "next-contentlayer/hooks";
 import { cn } from "@/lib/utils";
 import { Callout } from "./mdx/callout";
 import { MdxCard } from "./mdx/mdx-card";
+import Contributors from "./mdx/Contributors";
 
 const components = {
   h1: ({ className, ...props }: { className?: string; [key: string]: any }) => (
     <h1
       className={cn(
-        "mt-2 scroll-m-20 text-4xl font-bold tracking-tight",
+        "mt-2 scroll-m-20 font-display text-4xl font-bold tracking-tight",
         className,
       )}
       {...props}
@@ -19,7 +20,7 @@ const components = {
   h2: ({ className, ...props }: { className?: string; [key: string]: any }) => (
     <h2
       className={cn(
-        "mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0",
+        "mt-10 scroll-m-20 border-b pb-1 font-display text-3xl font-semibold tracking-tight first:mt-0",
         className,
       )}
       {...props}
@@ -28,7 +29,7 @@ const components = {
   h3: ({ className, ...props }: { className?: string; [key: string]: any }) => (
     <h3
       className={cn(
-        "mt-8 scroll-m-20 text-2xl font-semibold tracking-tight",
+        "mt-8 scroll-m-20 font-display text-2xl font-semibold tracking-tight",
         className,
       )}
       {...props}
@@ -37,7 +38,7 @@ const components = {
   h4: ({ className, ...props }: { className?: string; [key: string]: any }) => (
     <h4
       className={cn(
-        "mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
+        "mt-8 scroll-m-20 font-display text-xl font-semibold tracking-tight",
         className,
       )}
       {...props}
@@ -46,7 +47,7 @@ const components = {
   h5: ({ className, ...props }: { className?: string; [key: string]: any }) => (
     <h5
       className={cn(
-        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
+        "mt-8 scroll-m-20 font-display text-lg font-semibold tracking-tight",
         className,
       )}
       {...props}
@@ -55,7 +56,7 @@ const components = {
   h6: ({ className, ...props }: { className?: string; [key: string]: any }) => (
     <h6
       className={cn(
-        "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
+        "mt-8 scroll-m-20 font-display text-base font-semibold tracking-tight",
         className,
       )}
       {...props}
@@ -168,6 +169,7 @@ const components = {
   Image,
   Callout,
   Card: MdxCard,
+  Contributors,
 };
 
 interface MdxProps {
