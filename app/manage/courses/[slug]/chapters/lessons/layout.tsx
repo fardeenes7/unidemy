@@ -28,7 +28,7 @@ export default async function SiteLayout({
       <div className="space-4 flex flex-col gap-4 rounded-md  lg:col-span-1">
         <div className="flex items-center justify-between space-y-2 sm:space-x-4 sm:space-y-0">
           <h1 className="w-60 truncate font-display text-xl font-bold dark:text-white sm:w-auto sm:text-3xl">
-            All lessons of {data?.name}
+            All lessons of {data?.title}
           </h1>
           <CreateLessonButton />
         </div>

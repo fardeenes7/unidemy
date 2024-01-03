@@ -26,7 +26,7 @@ export default function Uploader({
         [name]: "",
       });
     }
-  }, [editMode]);
+  }, [editMode, name]);
 
   const [dragActive, setDragActive] = useState(false);
 
