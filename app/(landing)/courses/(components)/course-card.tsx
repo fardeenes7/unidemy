@@ -1,10 +1,22 @@
 import BlurImage from "@/components/manage/blur-image";
-import { placeholderBlurhash, random } from "@/lib/manage/utils";
-import { Course } from "@prisma/client";
-import { BarChart, ExternalLink, Star, Radio, Video } from "lucide-react";
+import { placeholderBlurhash } from "@/lib/manage/utils";
+import { Star, Radio, Video } from "lucide-react";
 import Link from "next/link";
 
-export default function CourseCard({ data }: { data: Course }) {
+interface CourseCardProps {
+  title: string;
+  description: string;
+  image: string;
+  imageBlurhash: string;
+  slug: string;
+  type: string;
+  averageRating: number;
+  totalRatings: number;
+  price: number;
+  discountedPrice: number;
+}
+
+export default function CourseCard({ data }: { data: CourseCardProps }) {
   const url = `${data.slug}`;
   return (
     <div
