@@ -5,6 +5,9 @@ import WebVitals from "@/components/home/web-vitals";
 import ComponentGrid from "@/components/home/component-grid";
 import Image from "next/image";
 import prisma from "@/lib/prisma";
+// import {} from "@fardeenes7/unidemy-prisma";
+// import { prisma } from "@fardeenes7/unidemy-prisma";
+
 import CourseCard from "@/app/(landing)/courses/(components)/course-card";
 import PageHeading from "@/components/landing/pageHeading";
 
